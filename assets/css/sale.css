@@ -1,0 +1,17 @@
+html,body{ width:100%; height:100%; padding:0px; margin:0px}
+#HeadFixed{ background-color:#000099; position:fixed; width:100%; z-index:999}
+#TopTable{ color:#FFFFFF; }
+#TopTable td{ border:1px solid #fff; padding:10px;}
+#TopTable td input, #TopTable td textarea{ width:100%}
+#clear{ clear:both}
+#wrapper_addupbody{ position:relative; background-color:#000000; width:100%; height:auto; background-attachment:fixed; padding-bottom:150px;}
+#fixed{ position:fixed;  z-index:1000}
+#addCosponsorSection{ height:auto; }
+#FoterFixed{ position:fixed; padding:10px;background-color:#000099; bottom:0px; width:100%}
+.ui-autocomplete { z-index:2147483647; padding:10px; background-color:DarkSlateGray; color:#FFFFFF }
+#GTotaldiv{ float:right; color:#FFFFFF; padding-right:20px;}
+#GTotaldiv input{ height:50px; width:100px; font-size:18px; background-color:#999999; border:none; text-align:center}
+#AmtDisplay{position:fixed; top:40%; right:30px;  color:#FFFFFF; background-color:gba(0,0,0,0); font-size:40px}
+.btn-success{ background-color:#009900; color:#FFFFFF; width:100px; padding:10px; float:right}
+.finalresult{ float:right; color:#FFFFFF}
+.finalresult input{ color:#FFFFFF}
