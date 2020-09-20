@@ -3,7 +3,7 @@
     $(".sidenav").sidenav();
   }); // end of document ready
 })(jQuery); // end of jQuery name space
-
+//  console.log("iusdhf");
 // glider settings
 
 new Glider(document.querySelector(".glider"), {

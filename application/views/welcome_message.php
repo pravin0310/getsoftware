@@ -36,6 +36,10 @@
 
     <!-- // CSS  -->
 
+    <!-- js -->
+    <script src="<?php echo base_url('js/custom.js')?>"></script>
+    <!-- End js -->
+
     <!-- Fonts  -->
 
     <link
@@ -107,10 +111,19 @@
         
          <!-- cart Count -->
 
-          <a data-toggle="tab" href="#cart"><i class="fa fa-cart-plus"> Cart  <?php if($this->cart->total_items()) { echo $this->cart->total_items(); } else { echo '0';}?></i></a> 
+        <div class="cart-button">
+        <button class="tabcontent" class="tablinks"  ><i class="fa fa-cart-plus"> Cart  <?php if($this->cart->total_items()) { echo $this->cart->total_items(); } else { echo '0';}?></i></button> 
 
+        <div class="cart-dropdown">
+        Cart dropdown content 
+        <br>
+        <a href="<?php base_url() ?>cart">GO TO CART</a>
+        </div>
+        </div>
+
+          
           <!-- End Count -->
- 
+           
           <a
           href="#"
           data-target="slide-out"
@@ -172,10 +185,11 @@
 
 
               <div  class="col l12 s12 m12 ">
-
+                     
                 <div  class="searchContainer2">
-                  <input class="browser-default navinput" type="text" placeholder="Search..."/> 
+                  <input  type="text" name="search" id="search" placeholder="Search..."/> 
                   <i class="fas fa-search smlscrnsearchicon"></i>
+                  <ul id="finalResult"></ul>
                 </div>
 
               </div>
@@ -188,57 +202,7 @@
 
 <!-- // end OF SMALL SCRENN INPUT BOX -->
 
-<!-- cart Details -->
 
-                   <div id="cart" class="tab-pane fade">  
-                          <div class="table-responsive" id="order_table">  
-                               <table class="table table-bordered">  
-                                    <tr>  
-                                         <th width="40%">Product Name</th>  
-                                         <th width="10%">Quantity</th>  
-                                         <th width="20%">Price</th>  
-                                         <th width="15%">Total</th>  
-                                         <th width="5%">Action</th>  
-                                    </tr>  
-                                    <?php 
-                                    $this->load->library("cart"); 
-                                    if(!empty($this->cart))  
-                                    {  
-                                         $total = 0;  
-                                         foreach($this->cart->contents() as $keys => $values)  
-                                         {                                               
-                                    ?>  
-                                    <tr>  
-                                         <td><?php echo $values["name"]; ?></td>  
-                                         <td><input type="text" name="quantity[]" id="quantity<?php echo $values["rowid"]; ?>" value="<?php echo $values["qty"]; ?>" data-product_id="<?php echo $values["rowid"]; ?>" class="form-control quantity_change" /></td>  
-                                         <td align="right">$ <?php echo $values["price"]; ?></td>  
-                                         <td align="right">$ <?php echo number_format($values["qty"] * $values["price"], 2); ?></td>  
-                                         <td><button name="delete" class="btn btn-danger btn-xs delete" id="<?php echo $values["rowid"]; ?>">Remove</button></td>  
-                                    </tr>  
-                                    <?php  
-                                              $total = $total + ($values["qty"] * $values["price"]);  
-                                         }  
-                                    ?>  
-                                    <tr>  
-                                         <td colspan="3" align="right">Total</td>  
-                                         <td align="right">$ <?php echo number_format($total, 2); ?></td>  
-                                         <td></td>  
-                                    </tr>  
-                                    <tr>  
-                                         <td colspan="5" align="center">  
-                                              <form method="post" action="cart.php">  
-                                                   <input type="submit" name="place_order" class="btn btn-warning" value="Place Order" />  
-                                              </form>  
-                                         </td>  
-                                    </tr>  
-                                    <?php  
-                                    }  
-                                    ?>  
-                               </table>  
-                          </div>  
-                     </div>
-
-            <!-- End cart Details -->
 
 
     <p class="bestSelHeading">OPERATING SYSTEMS</p>
@@ -590,6 +554,7 @@
 
       </footer>
 
+<!-- cart Details -->
 
 
 
@@ -600,152 +565,120 @@
 
     <!-- // Project Ends HERE -->
 
-     <script type="text/javascript">
-
-      $(document).ready(function(){
-
-        $('.add_to_cart').click(function(){
-
-           var product_id = $(this).attr("id");  
-           var product_name = $('#name'+product_id).val();  
-           var product_price = $('#price'+product_id).val();  
-           var product_quantity = $('#quantity'+product_id).val();  
-           var action = "add";  
-           if(product_quantity > 0)  
-           {  
-                $.ajax({  
-                     url:"<?php base_url() ?>Shopping_cart/add",  
-                     method:"POST",  
-                     data:{  
-                          product_id:product_id,   
-                          product_name:product_name,   
-                          product_price:product_price,   
-                          product_quantity:product_quantity,   
-                          action:action  
-                     },  
-                     success:function(data)  
-                     {  
-                         alert("Product has been Added into Cart");
-                          $('#order_table').html(data.order_table);
-                          $('.badge').text(data.cart_item);   
-                         
-                     }  
-                });  
-           }  
-           else  
-           {  
-                alert("Please Enter Number of Quantity")  
-           }  
      
 
-        });
+    
+ <script>
+   $(document).ready(function(){
+            $('.add_to_cart').click(function(){
 
-         $(document).on('keyup', '.quantity_change', function(){  
-           var product_id = $(this).data("product_id");  
-           var quantity = $(this).val();  
-           var action = "quantity_change";  
-           if(quantity != '')  
-           {  
-                $.ajax({  
-                     url :"<?php base_url() ?>Shopping_cart/qty_change",  
-                     method:"POST",  
-                     dataType:"json",  
-                     data:{product_id:product_id, quantity:quantity, action:action},  
-                     success:function(data){  
-                          console.log(data);
-                          $('#order_table').html(data.order_table);  
-                     }  
-                });  
-           }  
-      });  
+                var product_id = $(this).attr("id");  
+                var product_name = $('#name'+product_id).val();  
+                var product_price = $('#price'+product_id).val();  
+                var product_quantity = $('#quantity'+product_id).val();  
+                var action = "add";  
+                if(product_quantity > 0)  
+                {  
+                    $.ajax({  
+                        url:"<?php base_url() ?>Shopping_cart/add",  
+                        method:"POST",  
+                        data:{  
+                            product_id:product_id,   
+                            product_name:product_name,   
+                            product_price:product_price,   
+                            product_quantity:product_quantity,   
+                            action:action  
+                        },  
+                        success:function(data)  
+                        {  
+                            alert("Product has been Added into Cart");
+                            $('#order_table').html(data.order_table);
+                            $('.badge').text(data.cart_item);   
+                            
+                        }  
+                    });  
+                }  
+                else  
+                {  
+                    alert("Please Enter Number of Quantity")  
+                }  
 
-  });
-             
-      </script>
 
-     <script>  
- // $(document).ready(function(){  
- //  $(document).on('click', '.add_to_cart', function(){
- //    console.log("iudshfsd");
- //      // $('.add_to_cart').click(function(){  
- //                // alert("hello");
- //           // var product_id = $(this).attr("id");  
- //           // var product_name = $('#name'+product_id).val();  
- //           // var product_price = $('#price'+product_id).val();  
- //           // var product_quantity = $('#quantity'+product_id).val();  
- //           // var action = "add";  
- //           // if(product_quantity > 0)  
- //           // {  
- //           //      $.ajax({  
- //           //           url:"<?php base_url() ?>shopping_cart/add",  
- //           //           method:"POST",  
- //           //           dataType:"json",  
- //           //           data:{  
- //           //                product_id:product_id,   
- //           //                product_name:product_name,   
- //           //                product_price:product_price,   
- //           //                product_quantity:product_quantity,   
- //           //                action:action  
- //           //           },  
- //           //           success:function(data)  
- //           //           {  
+            });
+           
 
- //           //           alert(data);
- //           //                // $('#order_table').html(data.order_table);  
- //           //                // $('.badge').text(data.cart_item);  
- //           //                // alert("Product has been Added into Cart");  
- //           //           }  
- //           //      });  
- //           // }  
- //           // else  
- //           // {  
- //           //      alert("Please Enter Number of Quantity")  
- //           // }  
- //      }); 
- //       });   
- //      $(document).on('click', '.delete', function(){  
- //           var product_id = $(this).attr("id");  
- //           var action = "remove";  
- //           if(confirm("Are you sure you want to remove this product?"))  
- //           {  
- //                $.ajax({  
- //                     url:"action.php",  
- //                     method:"POST",  
- //                     dataType:"json",  
- //                     data:{product_id:product_id, action:action},  
- //                     success:function(data){  
- //                          $('#order_table').html(data.order_table);  
- //                          $('.badge').text(data.cart_item);  
- //                     }  
- //                });  
- //           }  
- //           else  
- //           {  
- //                return false;  
- //           }  
- //      });  
- //      $(document).on('keyup', '.quantity', function(){  
- //           var product_id = $(this).data("product_id");  
- //           var quantity = $(this).val();  
- //           var action = "quantity_change";  
- //           if(quantity != '')  
- //           {  
- //                $.ajax({  
- //                     url :"action.php",  
- //                     method:"POST",  
- //                     dataType:"json",  
- //                     data:{product_id:product_id, quantity:quantity, action:action},  
- //                     success:function(data){  
- //                          $('#order_table').html(data.order_table);  
- //                     }  
- //                });  
- //           }  
- //      });  
+            $(document).on('keyup', '.quantity_change', function(){  
+                var product_id = $(this).data("product_id");  
+                var quantity = $(this).val();  
+                var action = "quantity_change";  
+                if(quantity != '')  
+                {  
+                    $.ajax({  
+                        url :"<?php base_url() ?>Shopping_cart/qty_change",  
+                        method:"POST",  
+                        dataType:"json",  
+                        data:{product_id:product_id, quantity:quantity, action:action},  
+                        success:function(data){  
+                            console.log(data);
+                            $('#order_table').html(data.order_table);  
+                        }  
+                    });  
+                }  
+            });
+            
+            $(".cart-button").one("mouseover", function() {
+                $(".cart-dropdown").addClass('permahover');
+            });
+            $(".cart-button").one("mouseleave", function() {
+              $(".cart-dropdown").addClass('permahover');
+              $(".cart-dropdown").hide();
+            });
 
+            $(document).ready(function(){
+           $("#search").keyup(function(){
+          if($("#search").val().length>3){
+          $.ajax({
+           type: "post",
+           url: "<?php base_url() ?>Shopping_cart/search",
+           
+           dataType:'Json',    
+           data:'search='+$("#search").val(),
+           success: function(response){
+             console.log(response);
+            // $('#finalResult').html("");
+            // var obj = JSON.parse(response);
+            // if(obj.length>0){
+            //  try{
+            //   var items=[];  
+            //   $.each(obj, function(i,val){           
+            //       items.push($('<li/>').text(val.name + " " + val.image));
+            //   }); 
+            //   $('#finalResult').append.apply($('#finalResult'), items);
+            //  }catch(e) {  
+            //   alert('Exception while request..');
+            //  }  
+            // }else{
+            //  $('#finalResult').html($('<li/>').text("No Data Found"));  
+            // }  
+            
+           },
+          //  error: function(){      
+          //   alert('Error while request..');
+          //  }
+          });
+          }
+          return false;
+           });
+         });
+           
+
+});
  </script>
 
     <!--  Scripts-->
     <!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+    <script type="text/javascript" language="javascript" src="https://www.technicalkeeda.com/js/javascripts/plugin/jquery.js"></script>
+    <script type="text/javascript" src="https://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="<?php echo base_url('js/materialize.js')?>"></script>
     <!-- <script src="./glider.min.js"></script> -->

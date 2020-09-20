@@ -19,6 +19,7 @@ class Welcomem extends CI_Model
 		)); 
 			
 	}
+	
 	function fetchan(){
 
 		$data=$this->indexc->fetch();
@@ -29,29 +30,16 @@ class Welcomem extends CI_Model
 	}
 	function livefetch($query)
 	{
-		$this->db->like('productname',$query);
-		$query =$this->db->get('products');
-		if($query->num_rows > 0)
-		{
-			 foreach($query->result_array() as $row)
-			 {
-				 $output[] =array
-				 (
-					   'productname'   =>$row["productname"],
-					   'image'         =>$row["image"],         
-              
-				 );
-
-			 }
-			 echo json_encode($output);
-
-		}else
-		{
-			echo "<script>
-			alert('No Data Found');
-			
-			</script>";
-		}
+			$this->db->select("*");
+			$this->db->from("products");
+			if($query != '')
+			{
+			$this->db->like('name', $query);
+			$this->db->or_like('type', $query);
+		
+			}
+			$this->db->order_by('id', 'DESC');
+			return $this->db->get();
 
 	}
 }

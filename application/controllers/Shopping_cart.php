@@ -51,10 +51,20 @@ class Shopping_cart extends CI_Controller {
     }
  }
 
+ function search()
+ {
+     $search= $_POST['search'];
+     // echo json_encode ($search);
+     // echo json_encode ($search);
+     $this->load->model('welcomem');
+     $query = $this->welcomem->livefetch($search);
+     echo json_encode ($query);
+ }
+
  function remove()
  {
   $this->load->library("cart");
-  $row_id = $_POST["row_id"];
+  $row_id = $_POST["product_id"];
   $data = array(
    'rowid'  => $row_id,
    'qty'  => 0
@@ -65,9 +75,9 @@ class Shopping_cart extends CI_Controller {
 
  function clear()
  {
-  $this->load->library("cart");
-  $this->cart->destroy();
-  echo $this->view();
+     $this->load->library("cart");
+     $this->cart->destroy();
+     echo $this->view();
  }
  
  function view()
