@@ -20,6 +20,7 @@ class Welcome extends CI_Controller {
 	
 	public function index()
 	{
+        $data['antivirus']=$this->indexc->fetch_a();
         $data['products']=$this->indexc->fetch();
         $this->load->view('welcome_message',$data);
         $this->load->view('footer',$data);

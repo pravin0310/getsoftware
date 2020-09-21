@@ -15,7 +15,15 @@ class Indexc extends CI_Model {
             // $query=$this->db->get($this->table);
             // return $query;
 
-        $query=$this->db->query("SELECT * FROM  products ORDER BY id DESC");
+        $query=$this->db->query("SELECT * FROM  products WHERE type='operating system' ORDER BY id DESC");
+        return $query->result_array();
+    }
+    public function fetch_a()
+    {
+            // $query=$this->db->get($this->table);
+            // return $query;
+
+        $query=$this->db->query("SELECT * FROM  products WHERE type='Anti virus' ORDER BY id DESC");
         return $query->result_array();
     }
 

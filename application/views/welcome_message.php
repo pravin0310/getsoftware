@@ -36,9 +36,7 @@
 
     <!-- // CSS  -->
 
-    <!-- js -->
-    <script src="<?php echo base_url('js/custom.js')?>"></script>
-    <!-- End js -->
+    
 
     <!-- Fonts  -->
 
@@ -110,9 +108,9 @@
        
         
          <!-- cart Count -->
-
+         <!--?php if($this->cart->total_items()) { echo $this->cart->total_items(); } else { echo '0';}?-->
         <div class="cart-button">
-        <button class="tabcontent" class="tablinks"  ><i class="fa fa-cart-plus"> Cart  <?php if($this->cart->total_items()) { echo $this->cart->total_items(); } else { echo '0';}?></i></button> 
+        <button class="tabcontent" class="tablink"><i class="fa fa-cart-plus"> Cart <p class="cart_count"></p></i></button> 
 
         <div class="cart-dropdown">
         Cart dropdown content 
@@ -273,7 +271,7 @@
 
       <div class="glider secondndglid">
 
-           <?php foreach ($products as $value){ ?>
+           <?php foreach ($antivirus as $value){ ?>
                 <div class="card">
                     
                     <img class="cardImg"  src="<?php echo base_url('products/'. $value['image'] )?>" alt="Avatar" style="width:250px" />
@@ -570,6 +568,20 @@
     
  <script>
    $(document).ready(function(){
+            //  Fetch data
+              fetchUser();  
+              function fetchUser()  
+              {  
+              var action = "select";  
+              $.ajax({  
+              url : "<?php base_url() ?>Shopping_cart/shopping_load",  
+              method:"POST",  
+              data:{action:action},  
+              success:function(data){  
+                $('.cart_count').text(data); 
+              }  
+              });  
+              }  
             $('.add_to_cart').click(function(){
 
                 var product_id = $(this).attr("id");  
@@ -581,7 +593,7 @@
                 {  
                     $.ajax({  
                         url:"<?php base_url() ?>Shopping_cart/add",  
-                        method:"POST",  
+                        method:"POST",
                         data:{  
                             product_id:product_id,   
                             product_name:product_name,   
@@ -591,9 +603,10 @@
                         },  
                         success:function(data)  
                         {  
+                            fetchUser();  
                             alert("Product has been Added into Cart");
-                            $('#order_table').html(data.order_table);
-                            $('.badge').text(data.cart_item);   
+                            $('#order_table').html(data);
+                             
                             
                         }  
                     });  
@@ -676,6 +689,9 @@
  </script>
 
     <!--  Scripts-->
+    <!-- js -->
+    <script src="<?php echo base_url('js/custom.js')?>"></script>
+    <!-- End js -->
     <!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
     <script type="text/javascript" language="javascript" src="https://www.technicalkeeda.com/js/javascripts/plugin/jquery.js"></script>
     <script type="text/javascript" src="https://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
@@ -687,3 +703,98 @@
 
   </body>
 </html>
+
+<!-- <table class="table table-bordered">  
+                                    <tr>  
+                                         <th width="40%">Product Name</th>  
+                                         <th width="10%">Quantity</th>  
+                                         <th width="20%">Price</th>  
+                                         <th width="15%">Total</th>  
+                                         <th width="5%">Action</th>  
+                                    </tr>  
+                                    <?php 
+                                    $this->load->library("cart"); 
+                                    if(!empty($this->cart))  
+                                    {  
+                                         $total = 0;  
+                                         foreach($this->cart->contents() as $keys => $values)  
+                                         {                                               
+                                    ?>  
+                                    <tr>  
+                                         <td><?php echo $values["name"]; ?></td>  
+                                         <td><input type="text" name="quantity[]" id="quantity<?php echo $values["product_id"]; ?>" value="<?php echo $values["qty"]; ?>" data-product_id="<?php echo $values["product_id"]; ?>" class="form-control quantity_change" /></td>  
+                                         <td align="right">$ <?php echo $values["price"]; ?></td>  
+                                         <td align="right">$ <?php echo number_format($values["qty"] * $values["price"], 2); ?></td>  
+                                         <td><button name="delete" class="btn btn-danger btn-xs delete" id="<?php echo $values["product_id"]; ?>">Remove</button></td>  
+                                    </tr>  
+                                    <?php  
+                                              $total = $total + ($values["qty"] * $values["price"]);  
+                                         }  
+                                    ?>  
+                                    <tr>  
+                                         <td colspan="3" align="right">Total</td>  
+                                         <td align="right">$ <?php echo number_format($total, 2); ?></td>  
+                                         <td></td>  
+                                    </tr>  
+                                    <tr>  
+                                         <td colspan="5" align="center">  
+                                                  <button><a href="#"></a>Continue Shopping</button>
+                                                  <button><a href="#"></a>Clear cart</button> 
+                                              <form method="post" action="cart.php">
+                                                    
+                                                   <input type="submit" name="place_order" class="btn btn-warning" value="Proceed To Checkout" />  
+                                              </form>  
+                                         </td>  
+                                    </tr>  
+                                    <?php  
+                                    }  
+                                    ?>  
+                               </table> 
+                               <table class="table" id="cart_table">  
+                                    <tr>  
+                                         <th width="40%">Product Name</th>  
+                                         <th width="10%">Quantity</th>  
+                                         <th width="20%">Price</th>  
+                                         <th width="15%">Total</th>  
+                                         <th width="5%">Action</th>  
+                                    </tr>  
+                                    <?php 
+                                    $this->load->library("cart"); 
+                                    if(!empty($this->cart))  
+                                    {  
+                                         $total = 0;  
+                                         foreach($this->cart->contents() as $keys => $values)  
+                                         {                                               
+                                    ?>  
+                                    <tr id="cart_table2">  
+                                         <td><?php echo $values["name"]; ?></td>  
+                                         <td><input type="text" name="quantity[]" id="quantity<?php echo $values["rowid"]; ?>" value="<?php echo $values["qty"]; ?>" data-product_id="<?php echo $values["rowid"]; ?>" class="form-control quantity_change" /></td>  
+                                         <td align="right">$ <?php echo $values["price"]; ?></td>  
+                                         <td align="right">$ <?php echo number_format($values["qty"] * $values["price"], 2); ?></td>  
+                                         <td><button name="delete" class="btn btn-danger btn-xs delete" id="<?php echo $values["rowid"]; ?>">Remove</button></td>  
+                                    </tr>  
+                                    <?php  
+                                              $total = $total + ($values["qty"] * $values["price"]);  
+                                         }  
+                                    ?>  
+                                    <tr>  
+                                         <td colspan="3" align="right">Total</td>  
+                                         <td align="right">$ <?php echo number_format($total, 2); ?></td>  
+                                         <td></td>  
+                                    </tr>  
+                                    <tr>  
+                                         <td colspan="5" align="center" >  
+                                                  <a style="margin-left: 60%;" href="<?php base_url() ?>welcome" class="btn btn-success">Continue Shopping</a>
+                                                  <button class="btn btn-success"><a href="#"></a>Clear cart</button> <br>
+                                              <form method="post" action="cart.php">
+                                                    <br>
+                                                   <input  type="submit" name="place_order" class="btn btn-warning" value="Proceed To Checkout" />  
+                                              </form>  
+                                         </td>  
+                                    </tr>  
+                                    <?php  
+                                    }  
+                                    ?>  
+                </table>  
+                               
+                                 -->

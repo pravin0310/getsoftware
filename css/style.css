@@ -17,6 +17,11 @@ body {
 body {
   background-color: var(--primaryColor);
 }
+#shopping_table
+{
+  margin-left: 40%;
+  color: whitesmoke;
+}
 
 /* cart Hover */
 .cart-button {
