@@ -12,6 +12,16 @@ class Cart extends CI_Controller
        $data['title'] ="Shopping cart";  
        $this->load->view("cart",$data);
     }
+    public function check()
+    {  
+        $this->load->library("cart");
+        $this->load->view('check');
+    }
+    public function home()
+    {  
+        redirect('welcome');
+    }
+
 
 }
 

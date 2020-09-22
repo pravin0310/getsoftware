@@ -105,8 +105,8 @@
 
             <div class="btn-container">
             <button><a href="#os">DEALS</a></button>
-            <button>WINDOWS</button>
-            <button>ANTIVIRUS</button>
+            <button><a href="#other">OTHERS</a></button>
+            <button><a href="#anvirus">ANTIVIRUS</a></button>
             <button><a href="#office">OFFICE</a</button>
             </div>
           </div>
@@ -209,7 +209,7 @@
 
 
 
-    <p class="bestSelHeading">OPERATING SYSTEMS</p>
+    <p id="os" class="bestSelHeading">OPERATING SYSTEMS</p>
 
 
       <section style="padding-bottom: 40px; height: 70%;" class="bestsellers">
@@ -261,7 +261,7 @@
         <!-- second glider  -->
 
         
-        <p class="bestSelHeading">ANTIVIRUS</p>   
+        <p id="anvirus" class="bestSelHeading">ANTIVIRUS</p>   
 
     <section style="padding-bottom: 80px; height: 80%;" class="bestsellers"> 
     
@@ -371,7 +371,7 @@
 <!-- others section -->
 
 
-<p class="bestSelHeading">OTHERS</p>   
+<p id="other" class="bestSelHeading">OTHERS</p>   
 
     <section style=" height: 80%; " class="bestsellers"> 
     

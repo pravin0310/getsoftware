@@ -60,36 +60,7 @@ function shopping_load()
 
  function search()
  {
-    // if(isset($_GET["term"]))
-    // {
-    //             $search= $_POST['search_data'];
-    //             $this->load->model('welcomem');
-    //             $statement = $this->welcomem->livefetch($search);
-    //             $statement->execute();
-
-    //             $result = $statement->fetchAll();
-
-    //             $total_row = $statement->rowCount();
-
-    //             $output = array();
-    //             if($total_row > 0)
-    //             {
-    //             foreach($result as $row)
-    //             {
-    //             $temp_array = array();
-    //             $temp_array['value'] = $row['name'];
-    //             $temp_array['label'] = '<img src="./products'.$row['image'].'" width="70" />&nbsp;&nbsp;&nbsp;'.$row['name'].'';
-    //             $output[] = $temp_array;
-    //             }
-    //             }
-    //             else
-    //             {
-    //             $output['value'] = '';
-    //             $output['label'] = 'No Record Found';
-    //             }
-
-    //             echo json_encode($output);
-    // }           
+    
     $this->load->model('welcomem');
 
     $search_data = $this->input->post('search_data');
@@ -229,12 +200,10 @@ function shopping_load()
         </tr>  
         <tr>  
             <td colspan="5" align="center" >  
-                    
-                   
-                <form method="post" action="cart.php">
+               
                 <a style="margin-left: 60%;" href="'.base_url('welcome').'"" class="btn btn-success">Continue Shopping</a>
-                    <input  type="submit" name="place_order" class="btn btn-warning" value="Proceed To Checkout" />  
-                </form>  
+                <a  href="'.base_url('cart/check').'"" class="btn btn-success">Proceed To Checkout</a>
+               
             </td>  
         </tr>  
         </table>
