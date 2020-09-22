@@ -204,9 +204,11 @@
 
     <div class="container_fluid" style="padding-top: 2rem;">
 
-    <div style="color: white;"><?php if(!empty($title)) $title ?></div>
+          <div style="color: white;"><?php if(!empty($title)) $title ?></div>
 
-    <div id="cart_table"></div>
+          <div id="cart_table">
+          
+          </div>
 
 
 

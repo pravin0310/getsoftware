@@ -92,16 +92,22 @@
 
           <img style="padding-left: 10px;" height="50px" width="100px" src="./images/logo.png" alt="">
           <div class="searchContainer">
-          <input class="browser-default navinput" type="text" placeholder="Search..."/> 
+          <input class="browser-default navinput" name="search_data" id="search_data" type="text" onkeyup="ajaxSearch();"> 
           <i class="fas fa-search"></i>
+          
           </div>
+          <div id="suggestions">
+          <div id="autoSuggestionsList"></div>
+          </div>
+          
+          
           <div class="nav-btnwrapper">
 
             <div class="btn-container">
-            <button >DEALS</button>
+            <button><a href="#os">DEALS</a></button>
             <button>WINDOWS</button>
             <button>ANTIVIRUS</button>
-            <button>OFFICE</button>
+            <button><a href="#office">OFFICE</a</button>
             </div>
           </div>
 
@@ -310,7 +316,7 @@
 <!-- office Section -->
 
 
-<p class="bestSelHeading">OFFICE</p>   
+<p id="office" class="bestSelHeading">OFFICE</p>   
 
     <section style="padding-bottom: 80px; height: 80%; margin-bottom: 80px;" class="bestsellers"> 
     
@@ -647,42 +653,53 @@
               $(".cart-dropdown").hide();
             });
 
-            $(document).ready(function(){
-           $("#search").keyup(function(){
-          if($("#search").val().length>3){
-          $.ajax({
-           type: "post",
-           url: "<?php base_url() ?>Shopping_cart/search",
-           
-           dataType:'Json',    
-           data:'search='+$("#search").val(),
-           success: function(response){
-             console.log(response);
-            // $('#finalResult').html("");
-            // var obj = JSON.parse(response);
-            // if(obj.length>0){
-            //  try{
-            //   var items=[];  
-            //   $.each(obj, function(i,val){           
-            //       items.push($('<li/>').text(val.name + " " + val.image));
-            //   }); 
-            //   $('#finalResult').append.apply($('#finalResult'), items);
-            //  }catch(e) {  
-            //   alert('Exception while request..');
-            //  }  
-            // }else{
-            //  $('#finalResult').html($('<li/>').text("No Data Found"));  
-            // }  
-            
-           },
-          //  error: function(){      
-          //   alert('Error while request..');
-          //  }
-          });
-          }
-          return false;
-           });
-         });
+        $('#search_data').autocomplete({
+        source: "<?php base_url() ?>Shopping_cart/search",
+        minLength: 1,
+        select: function(event, ui)
+        {
+        $('#search_data').val(ui.item.value);
+        }
+        }).data('ui-autocomplete')._renderItem = function(ul, item){
+        return $("<li class='ui-autocomplete-row'></li>")
+        .data("item.autocomplete", item)
+        .append(item.label)
+        .appendTo(ul);
+        };
+
+        function ajaxSearch()
+        {
+        var input_data = $('#search_data').val();
+
+        if (input_data.length === 0)
+        {
+        $('#suggestions').hide();
+        }
+        else
+        {
+
+        var post_data = {
+        'search_data': input_data,
+        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+        };
+
+        $.ajax({
+        type: "POST",
+        url: "<?php echo base_url(); ?>Shopping_cart/search/",
+        data: post_data,
+        success: function (data) {
+        // return success
+        if (data.length > 0) {
+          // console.log(data);
+        $('#suggestions').show();
+        $('#autoSuggestionsList').addClass('auto_list');
+        $('#autoSuggestionsList').html(data);
+        }
+        }
+        });
+
+        }
+        }
            
 
 });

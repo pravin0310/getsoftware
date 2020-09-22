@@ -60,12 +60,54 @@ function shopping_load()
 
  function search()
  {
-     $search= $_POST['search'];
-     // echo json_encode ($search);
-     // echo json_encode ($search);
-     $this->load->model('welcomem');
-     $query = $this->welcomem->livefetch($search);
-     echo json_encode ($query);
+    // if(isset($_GET["term"]))
+    // {
+    //             $search= $_POST['search_data'];
+    //             $this->load->model('welcomem');
+    //             $statement = $this->welcomem->livefetch($search);
+    //             $statement->execute();
+
+    //             $result = $statement->fetchAll();
+
+    //             $total_row = $statement->rowCount();
+
+    //             $output = array();
+    //             if($total_row > 0)
+    //             {
+    //             foreach($result as $row)
+    //             {
+    //             $temp_array = array();
+    //             $temp_array['value'] = $row['name'];
+    //             $temp_array['label'] = '<img src="./products'.$row['image'].'" width="70" />&nbsp;&nbsp;&nbsp;'.$row['name'].'';
+    //             $output[] = $temp_array;
+    //             }
+    //             }
+    //             else
+    //             {
+    //             $output['value'] = '';
+    //             $output['label'] = 'No Record Found';
+    //             }
+
+    //             echo json_encode($output);
+    // }           
+    $this->load->model('welcomem');
+
+    $search_data = $this->input->post('search_data');
+
+    $result = $this->welcomem->livefetch($search_data);
+
+    if($data->num_rows() > 0)
+  {
+   foreach($data->result() as $row)
+   {
+              echo "<li><a href='#'>" . $row->name . $row->type . $row->amount . "</a></li>";
+             
+         endforeach;
+    }
+    else
+    {
+          echo "<li> <em> Not found ... </em> </li>";
+    }
  }
 
  function remove()

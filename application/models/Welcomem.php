@@ -30,16 +30,18 @@ class Welcomem extends CI_Model
 	}
 	function livefetch($query)
 	{
-			$this->db->select("*");
-			$this->db->from("products");
-			if($query != '')
-			{
-			$this->db->like('name', $query);
-			$this->db->or_like('type', $query);
-		
-			}
-			$this->db->order_by('id', 'DESC');
-			return $this->db->get();
+		$this->db->select("*");
+		$this->db->from("products");
+		if($query != '')
+		{
+		 $this->db->like('name', $query);
+		 $this->db->or_like('type', $query);
+		//  $this->db->or_like('City', $query);
+		//  $this->db->or_like('PostalCode', $query);
+		//  $this->db->or_like('Country', $query);
+		}
+		$this->db->order_by('id', 'DESC');
+		return $this->db->get()->result();
 
 	}
 }
