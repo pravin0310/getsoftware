@@ -96,19 +96,20 @@ function shopping_load()
 
     $result = $this->welcomem->livefetch($search_data);
 
-    if($data->num_rows() > 0)
-  {
-   foreach($data->result() as $row)
-   {
-              echo "<li><a href='#'>" . $row->name . $row->type . $row->amount . "</a></li>";
+//     if($data->num_rows() > 0)
+//   {
+//    foreach($data->result() as $row)
+//    {
+//               echo "<li><a href='#'>" . $row->name . $row->type . $row->amount . "</a></li>";
              
-         endforeach;
-    }
-    else
-    {
-          echo "<li> <em> Not found ... </em> </li>";
-    }
- }
+         
+//     }
+//     else
+//     {
+//           echo "<li> <em> Not found ... </em> </li>";
+//     }
+//  }
+}
 
  function remove()
  {
