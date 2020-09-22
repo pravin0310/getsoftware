@@ -207,11 +207,24 @@
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-pencil"></i>
-                        <span>ADMIN VIEW</span>
+                        <span>PRODUCT TYPE</span>
                     </a>
                     <ul class="sub">
                         <li><a href="<?php echo base_url() ?>producttype"> <i class="fa fa-user-plus"></i>  ADD PRODUCT TYPE</a></li>
                         <li><a href="<?php echo base_url() ?>products"> <i class="fa fa-briefcase"></i> VIEW  PRODUT TYPE</a></li>
+                        
+                        
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-pencil"></i>
+                        <span>PROMO CODE</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="<?php echo base_url() ?>promo"> <i class="fa fa-user-plus"></i>  ADD PROMO CODE</a></li>
+                        <li><a href="<?php echo base_url() ?>promo/view"> <i class="fa fa-briefcase"></i> VIEW  PROMO CODE</a></li>
                         
                         
                     </ul>
