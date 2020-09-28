@@ -67,19 +67,16 @@ function shopping_load()
 
     $result = $this->welcomem->livefetch($search_data);
 
-//     if($data->num_rows() > 0)
+//     if($result->num_rows() > 0)
 //   {
-//    foreach($data->result() as $row)
-//    {
-//               echo "<li><a href='#'>" . $row->name . $row->type . $row->amount . "</a></li>";
+   foreach($result->result() as $row)
+   {
+       echo "<li><a href='#'>" . $row->name . $row->type . $row->amount . "</a></li>";
              
          
-//     }
-//     else
-//     {
-//           echo "<li> <em> Not found ... </em> </li>";
-//     }
-//  }
+    }
+    
+ 
 }
 
  function remove()
@@ -139,6 +136,7 @@ function shopping_load()
         }
         $output .= '
          <tr>
+         
           <td colspan="4" align="right">Total</td>
           <td>'.$this->cart->total().'</td>
           <td>'.$this->cart->total_items().'</td>
@@ -192,7 +190,11 @@ function shopping_load()
          ';
         }
         $output .= '
-         
+        <tr>  
+          
+        <td align="right">$'.$this->cart->total().'</td>  
+        <td></td>  
+        </tr>  
         <tr>  
             <td colspan="3" align="right">Total</td>  
             <td align="right">$'.$this->cart->total().'</td>  
@@ -219,6 +221,7 @@ function shopping_load()
         return $output;
         // return $message;
     }
+    
      
  }
 ?>

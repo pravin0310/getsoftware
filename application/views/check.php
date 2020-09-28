@@ -227,6 +227,14 @@
                     <td><?php echo number_format(($this->cart->total()),2) ?></td>
                 </tr>
                 <tr>
+                    <td for="promo_code">Promo Code</td>
+                    <td>
+                        <input type="text" class="browser-default navinput" id="coupon_code" placeholder="Apply Promocode" name="coupon_code">
+                        <b><span id="message" style="color:green;"></span></b> 
+                    </td>
+                    <td><button id="apply" class="btn btn-default">Apply</button></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td>Total</td>
                     <td><?php echo number_format(($this->cart->total())+50.00,2) ?></td>
@@ -235,7 +243,7 @@
             <td colspan="5" align="center" >  
                
                 <a style="margin-left: 60%;" href="<?php base_url('') ?>cart/home" class="btn btn-success">Continue Shopping</a>
-                <a  href="<?php base_url() ?>cart/check" class="btn btn-success">Proceed To Checkout</a>
+                <a  href="<?php base_url() ?>../payment" class="btn btn-success">Proceed To Checkout</a>
                
             </td>  
         </tr>  
@@ -443,6 +451,40 @@
             return false;  
             }  
             });
+            $("#apply").click(function(){
+                    if($('#promo_code').val()!=''){
+                      $.ajax({
+                            type: "POST",
+                            url: "<?php base_url() ?>check/get_coupen",
+                            data:{
+                              coupon_code: $('#coupon_code').val()
+                            },
+                            dataType:"json",
+                            success: function(dataResult){
+                              // var dataResult = JSON.parse(dataResult);
+                              if(dataResult.statusCode==200){
+                               
+                                // var after_apply=$('#total_price').val()-dataResult.value;
+                              console.log(dataResult.value);
+                                // $('#total_price').val(after_apply);
+                                // $('#apply').hide();
+                                // $('#edit').show();
+                                // $('#message').html("Promocode applied successfully !");
+                                alert('Promocode applied successfully !');
+                                
+                              }
+                              else if(dataResult.statusCode==201){
+                                // $('#message').html("Invalid promocode !");
+                                alert("Invalid promocode !");
+                              }
+                            }
+                      });
+                    }
+                    else{
+                      // $('#message').html("Promocode can not be blank .Enter a Valid Promocode !");
+                      alert("Promocode can not be blank .Enter a Valid Promocode !");
+                    }
+          	});
    });  
      </script>
 

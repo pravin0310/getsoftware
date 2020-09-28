@@ -89,16 +89,19 @@
           <!-- <h5>
             logo HERE
           </h5> -->
+        <!-- <div class="frmSearch">
+        <input type="text" id="search-box" placeholder="Country Name" />
+        
+        </div> -->
 
           <img style="padding-left: 10px;" height="50px" width="100px" src="./images/logo.png" alt="">
           <div class="searchContainer">
-          <input class="browser-default navinput" name="search_data" id="search_data" type="text" onkeyup="ajaxSearch();"> 
+          <input class="browser-default navinput" type="text" id="search-box" placeholder="Country Name" /> 
           <i class="fas fa-search"></i>
+          <div id="suggesstion-box"></div>
           
           </div>
-          <div id="suggestions">
-          <div id="autoSuggestionsList"></div>
-          </div>
+        
           
           
           <div class="nav-btnwrapper">
@@ -624,6 +627,24 @@
 
 
             });
+            // AJAX call for autocomplete 
+            $(document).ready(function(){
+            $("#search-box").keyup(function(){
+            $.ajax({
+            type: "POST",
+            url: "<?php base_url() ?>Shopping_cart/search",
+            data:'keyword='+$(this).val(),
+            beforeSend: function(){
+            $("#search-box").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+            },
+            success: function(data){
+            $("#suggesstion-box").show();
+            $("#suggesstion-box").html(data);
+            $("#search-box").css("background","#FFF");
+            }
+            });
+            });
+            });
            
 
             $(document).on('keyup', '.quantity_change', function(){  
@@ -720,98 +741,3 @@
 
   </body>
 </html>
-
-<!-- <table class="table table-bordered">  
-                                    <tr>  
-                                         <th width="40%">Product Name</th>  
-                                         <th width="10%">Quantity</th>  
-                                         <th width="20%">Price</th>  
-                                         <th width="15%">Total</th>  
-                                         <th width="5%">Action</th>  
-                                    </tr>  
-                                    <?php 
-                                    $this->load->library("cart"); 
-                                    if(!empty($this->cart))  
-                                    {  
-                                         $total = 0;  
-                                         foreach($this->cart->contents() as $keys => $values)  
-                                         {                                               
-                                    ?>  
-                                    <tr>  
-                                         <td><?php echo $values["name"]; ?></td>  
-                                         <td><input type="text" name="quantity[]" id="quantity<?php echo $values["product_id"]; ?>" value="<?php echo $values["qty"]; ?>" data-product_id="<?php echo $values["product_id"]; ?>" class="form-control quantity_change" /></td>  
-                                         <td align="right">$ <?php echo $values["price"]; ?></td>  
-                                         <td align="right">$ <?php echo number_format($values["qty"] * $values["price"], 2); ?></td>  
-                                         <td><button name="delete" class="btn btn-danger btn-xs delete" id="<?php echo $values["product_id"]; ?>">Remove</button></td>  
-                                    </tr>  
-                                    <?php  
-                                              $total = $total + ($values["qty"] * $values["price"]);  
-                                         }  
-                                    ?>  
-                                    <tr>  
-                                         <td colspan="3" align="right">Total</td>  
-                                         <td align="right">$ <?php echo number_format($total, 2); ?></td>  
-                                         <td></td>  
-                                    </tr>  
-                                    <tr>  
-                                         <td colspan="5" align="center">  
-                                                  <button><a href="#"></a>Continue Shopping</button>
-                                                  <button><a href="#"></a>Clear cart</button> 
-                                              <form method="post" action="cart.php">
-                                                    
-                                                   <input type="submit" name="place_order" class="btn btn-warning" value="Proceed To Checkout" />  
-                                              </form>  
-                                         </td>  
-                                    </tr>  
-                                    <?php  
-                                    }  
-                                    ?>  
-                               </table> 
-                               <table class="table" id="cart_table">  
-                                    <tr>  
-                                         <th width="40%">Product Name</th>  
-                                         <th width="10%">Quantity</th>  
-                                         <th width="20%">Price</th>  
-                                         <th width="15%">Total</th>  
-                                         <th width="5%">Action</th>  
-                                    </tr>  
-                                    <?php 
-                                    $this->load->library("cart"); 
-                                    if(!empty($this->cart))  
-                                    {  
-                                         $total = 0;  
-                                         foreach($this->cart->contents() as $keys => $values)  
-                                         {                                               
-                                    ?>  
-                                    <tr id="cart_table2">  
-                                         <td><?php echo $values["name"]; ?></td>  
-                                         <td><input type="text" name="quantity[]" id="quantity<?php echo $values["rowid"]; ?>" value="<?php echo $values["qty"]; ?>" data-product_id="<?php echo $values["rowid"]; ?>" class="form-control quantity_change" /></td>  
-                                         <td align="right">$ <?php echo $values["price"]; ?></td>  
-                                         <td align="right">$ <?php echo number_format($values["qty"] * $values["price"], 2); ?></td>  
-                                         <td><button name="delete" class="btn btn-danger btn-xs delete" id="<?php echo $values["rowid"]; ?>">Remove</button></td>  
-                                    </tr>  
-                                    <?php  
-                                              $total = $total + ($values["qty"] * $values["price"]);  
-                                         }  
-                                    ?>  
-                                    <tr>  
-                                         <td colspan="3" align="right">Total</td>  
-                                         <td align="right">$ <?php echo number_format($total, 2); ?></td>  
-                                         <td></td>  
-                                    </tr>  
-                                    <tr>  
-                                         <td colspan="5" align="center" >  
-                                                  <a style="margin-left: 60%;" href="<?php base_url() ?>welcome" class="btn btn-success">Continue Shopping</a>
-                                                  <button class="btn btn-success"><a href="#"></a>Clear cart</button> <br>
-                                              <form method="post" action="cart.php">
-                                                    <br>
-                                                   <input  type="submit" name="place_order" class="btn btn-warning" value="Proceed To Checkout" />  
-                                              </form>  
-                                         </td>  
-                                    </tr>  
-                                    <?php  
-                                    }  
-                                    ?>  
-                </table>  
-                               
-                                 -->

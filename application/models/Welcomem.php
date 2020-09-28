@@ -41,8 +41,15 @@ class Welcomem extends CI_Model
 		//  $this->db->or_like('Country', $query);
 		}
 		$this->db->order_by('id', 'DESC');
-		return $this->db->get()->result();
+		return $this->db->get();
 
+	}
+	function livefetch_code($query)
+	{
+		$this->db->select('*');
+		$this->db->from("promocode");
+		$this->db->where('promo_name',$query);
+		return $this->db->get();
 	}
 }
 
