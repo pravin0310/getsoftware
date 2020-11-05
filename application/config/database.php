@@ -94,3 +94,7 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+// define('STRIPE_API_KEY', 'sk_test_51HaPZgAl5undhtluBtZa3AnjWZTI4tILTuWaXhgevq8R4E25ksJ0oG6jQzp6CanG35PlBfttaddq9H9JIl7dANPZ00TkYzChMQ');  
+// define('STRIPE_PUBLISHABLE_KEY', 'pk_test_51HaPZgAl5undhtluSTHfzs9mNEsEttuB4QovjpfJxrmN8RyuFmghqlMUz0PXel4qkkb7S9LF3hxgYlmD5V3UMXDm00ybp1wv26');  
+// define('STRIPE_SUCCESS_URL', 'https://example.com/success.php'); 
+// define('STRIPE_CANCEL_URL', 'https://example.com/cancel.php'); 

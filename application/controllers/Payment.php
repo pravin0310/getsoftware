@@ -26,6 +26,7 @@ class Payment extends CI_Controller
 		// $data=$this->indexc->fetch();
       
 		// $this->load->view('header',$data);
+		$this->load->library('cart');
 		$this->load->view('paymentform');
 		// $this->load->view('footer',$data);
 	}

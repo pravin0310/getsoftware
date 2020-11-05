@@ -82,7 +82,7 @@
             </div>
            </div>
            <hr />
-           <h4 align="center">Payment Details</h4>
+           <!-- <h4 align="center">Payment Details</h4>
            <div class="form-group">
                   <label>Card Number <span class="text-danger">*</span></label>
                   <input type="text" name="card_holder_number" id="card_holder_number" class="form-control" placeholder="1234 5678 9012 3456" maxlength="20" onkeypress="" />
@@ -106,18 +106,49 @@
                    <span id="error_card_cvc" class="text-danger"></span>
                   </div>
                  </div>
-              </div>
+              </div> -->
               <br />
         <div align="center">
          <input type="hidden" name="total_amount" value="" /><!--?php echo $total_price; ?-->
          <input type="hidden" name="currency_code" value="USD" />
          <input type="hidden" name="item_details" value="" /><!--?php echo $item_details; ?-->
-         <input type="button" name="button_action" id="button_action" class="btn btn-success btn-sm" onclick="stripePay(event)" value="Pay Now" />
+         <!-- <input type="button" name="button_action" id="button_action" class="btn btn-success btn-sm" onclick="stripePay(event)" value="Pay Now" /> -->
         </div>
         <br />
        </div>
        <div class="col-md-4">
         <h4 align="center">Order Details</h4>
+        <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>DESCRIPTION</th>
+                    <th>AMOUNT</th>
+                    <th>TOTAL</th>
+                </tr>
+                </thead>
+                <tbody>
+               
+                <tr>
+                    <td>Total Cart Amount</td>
+                    <td><?php echo number_format(($this->cart->total()),2) ?></td>
+                    <td><?php echo number_format(($this->cart->total()),2) ?></td>
+                </tr>
+               
+                <tr>
+                    <td></td>
+                    <td>Total</td>
+                    <td><?php echo number_format(($this->cart->total())+50.00,2) ?></td>
+                </tr>
+                <tr>  
+            
+        </tr>  
+                <tbody>
+         </table>
+         <div> 
+          
+          <p>Pay with Stripe or Paypal</p>
+           <img src="images/stock/stripe.png" style=" width: 100% !important ">
+         </div>
         <?php
         // echo $order_details;
         ?>

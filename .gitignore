@@ -29,3 +29,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+application\third_party\stripe-php
+application\libraries\Stripe_lib.php

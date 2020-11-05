@@ -25,7 +25,7 @@ class Check extends CI_Controller
                         // "promo_name"=>$row['promo_name'];
                         // "amount"=>$row['amount'];
                         // "status"=>$row['status'];
-                        "value"=>$row['value'];
+                        "value"=>$row['value'],
                     ));
         }
         else{
